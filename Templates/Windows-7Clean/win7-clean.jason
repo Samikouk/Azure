@@ -4,7 +4,7 @@
   "parameters": {
     "newVMName": {
       "type": "string",
-      "defaultValue": "Sk-Test"
+      "defaultValue": "MAT-TW"
     },
     "labName": {
       "type": "string",
@@ -16,7 +16,7 @@
     },
     "userName": {
       "type": "string",
-      "defaultValue": "localhost"
+      "defaultValue": "localadmin"
     },
     "password": {
       "type": "securestring"
