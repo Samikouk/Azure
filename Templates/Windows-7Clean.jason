@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "newVMName": {
+      "type": "string",
+      "defaultValue": "Sk-Test"
+    },
+    "labName": {
+      "type": "string",
+      "defaultValue": "MAT-DevelopmentLab"
+    },
+    "size": {
+      "type": "string",
+      "defaultValue": "Standard_DS4"
+    },
+    "userName": {
+      "type": "string",
+      "defaultValue": "localhost"
+    },
+    "password": {
+      "type": "securestring"
+    }
+  },
+  "variables": {
+    "vmId": "[resourceId ('Microsoft.DevTestLab/labs/virtualMachines', parameters('labName'), parameters('newVMName'))]",
+    "vmName": "[concat(parameters('labName'), '/', parameters('newVMName'))]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2016-05-15",
+      "type": "Microsoft.DevTestLab/labs/virtualMachines",
+      "name": "[variables('vmName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "labVirtualNetworkId": "[resourceId('Microsoft.DevTestLab/labs/virtualnetworks', parameters('labName'), 'mat-vnet')]",
+        "notes": "OW7Clean",
+        "customImageId": "/subscriptions/45a7c458-b7ab-4204-aa13-ab05f3068efc/resourcegroups/mat-developmentlabrg258461/providers/microsoft.devtestlab/labs/mat-developmentlab/customimages/ow7clean",
+        "size": "[parameters('size')]",
+        "userName": "[parameters('userName')]",
+        "password": "[parameters('password')]",
+        "isAuthenticationWithSshKey": false,
+        "labSubnetName": "Development",
+        "disallowPublicIpAddress": true
+      }
+    }
+  ],
+  "outputs": {
+    "labVMId": {
+      "type": "string",
+      "value": "[variables('vmId')]"
+    }
+  }
+}
